@@ -7,3 +7,10 @@ data class Vendor(
     val address: String?,
     val createdAt: Long?
 )
+
+data class ListVendor(
+    val search: String?,
+    val page: Int?,
+    val size: Int?,
+    val getAll: Boolean?
+)
