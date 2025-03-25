@@ -1,25 +1,27 @@
 package com.example.vendor_item.repository
 
-import com.example.vendor_item.model.Vendor
+import com.example.vendor_item.model.Item
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
 
 @Repository
-class VendorRepository(private val jdbcTemplate: JdbcTemplate) {
+class ItemRepository(private val jdbcTemplate: JdbcTemplate) {
 
     private val rowMapper = RowMapper { rs, _ ->
-        Vendor(
+        Item(
             id = rs.getString("id"),
             name = rs.getString("name"),
-            phone = rs.getString("phone"),
-            address = rs.getString("address"),
+            price = rs.getDouble("price"),
+            vendorId = rs.getString("vendor_id"),
+            description = rs.getString("description"),
+            imageUrl = rs.getString("image_url"),
             createdAt = rs.getLong("created_at")
         )
     }
 
-    fun findAll(search: String?, page: Int?, size: Int?, getAll: Boolean?): List<Vendor> {
-        var sql = "SELECT * FROM vendor"
+    fun findAll(search: String?, page: Int?, size: Int?, getAll: Boolean?): List<Item> {
+        var sql = "SELECT * FROM item"
         val params = mutableListOf<Any>()
         val whereClauses = mutableListOf<String>()
 
@@ -44,23 +46,23 @@ class VendorRepository(private val jdbcTemplate: JdbcTemplate) {
         return jdbcTemplate.query(sql, params.toTypedArray(), rowMapper)
     }
 
-    fun findById(id: String): Vendor? {
-        val sql = "SELECT * FROM vendor WHERE id = ?"
+    fun findById(id: String): Item? {
+        val sql = "SELECT * FROM item WHERE id = ?"
         return jdbcTemplate.query(sql, rowMapper, id).firstOrNull()
     }
 
-    fun save(vendor: Vendor): Int {
-        val sql = "INSERT INTO vendor (id, name, phone, address, created_at) VALUES (?, ?, ?, ?, ?)"
-        return jdbcTemplate.update(sql, vendor.id, vendor.name, vendor.phone, vendor.address, vendor.createdAt)
+    fun save(item: Item): Int {
+        val sql = "INSERT INTO item (id, name, price, vendor_id, description, image_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        return jdbcTemplate.update(sql, item.id, item.name, item.price, item.vendorId, item.description, item.imageUrl, item.createdAt)
     }
 
-    fun update(vendor: Vendor): Int {
-        val sql = "UPDATE vendor SET name = ?, phone = ?, address = ?, created_at = ? WHERE id = ?"
-        return jdbcTemplate.update(sql, vendor.name, vendor.phone, vendor.address, vendor.createdAt, vendor.id)
+    fun update(item: Item): Int {
+        val sql = "UPDATE item SET name = ?, price = ?, vendor_id = ?, description = ?, image_url = ?, created_at = ? WHERE id = ?"
+        return jdbcTemplate.update(sql, item.name, item.price, item.vendorId, item.description, item.imageUrl, item.createdAt, item.id)
     }
 
     fun deleteById(id: String): Int {
-        val sql = "DELETE FROM vendor WHERE id = ?"
+        val sql = "DELETE FROM item WHERE id = ?"
         return jdbcTemplate.update(sql, id)
     }
 }

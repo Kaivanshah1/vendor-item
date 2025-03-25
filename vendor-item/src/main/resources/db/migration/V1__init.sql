@@ -6,7 +6,7 @@ CREATE TABLE vendor (
     created_at BIGINT
 );
 
-CREATE TABLE user (
+CREATE TABLE users (
     id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255),
@@ -30,7 +30,7 @@ CREATE TABLE orders (
     user_id VARCHAR(255),
     status VARCHAR(255),
     created_at BIGINT,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE order_item (

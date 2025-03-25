@@ -4,6 +4,7 @@ data class Order(
     val id: String?,
     val userId: String?,
     val status: String?,
+    val items: MutableList<OrderItem> = mutableListOf(),
     val createdAt: Long?
 )
 
@@ -15,4 +16,10 @@ data class OrderItem(
     val createdAt: Long?
 )
 
-
+data class ListOrder(
+    val search: String?,
+    val page: Int?,
+    val size: Int?,
+    val getAll: Boolean?,
+    val userId: String
+)

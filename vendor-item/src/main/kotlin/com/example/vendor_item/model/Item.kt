@@ -9,3 +9,10 @@ data class Item(
     val imageUrl: String?,
     val createdAt: Long?
 )
+
+data class ListItem(
+    val search: String?,
+    val page: Int?,
+    val size: Int?,
+    val getAll: Boolean?
+)

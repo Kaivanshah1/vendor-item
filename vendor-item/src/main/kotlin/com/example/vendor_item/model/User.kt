@@ -7,3 +7,10 @@ data class User(
     val phone: String?,
     val createdAt: Long?
 )
+
+data class ListUser(
+    val search: String?,
+    val page: Int?,
+    val size: Int?,
+    val getAll: Boolean?
+)
